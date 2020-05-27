@@ -19,9 +19,9 @@ export default class VArrayBuffer {
 		// In the meanwhile, we have to record the information that where is the end of the byte stream.
 		// As length of the dataArray is variable (i.e., recording the length cannot be done within fixed size),
 		// we record "garbage length" instead.
-		// Use use first 1byte to record the garbage length, so the final byte length of the buffer is
-		// "containerSize * containerNum / 8 + 1".
-		const buffer = new ArrayBuffer(containerSize * containerNum / 8 + 1);
+		// Use use first container to record the garbage length, so the final byte length of the buffer is
+		// "containerSize * (containerNum + 1) / 8".
+		const buffer = new ArrayBuffer(containerSize * (containerNum + 1) / 8);
 
 		// Note: View contents are initialized to 0 when using native ArrayViews.
 		const view = VArrayBuffer.getViewFromContainerSize(containerSize, buffer);
@@ -44,7 +44,7 @@ export default class VArrayBuffer {
 
 			} else {
 				// In the second case, divide data and write into two containers
-				view[viewIndex] |= dataArray[i] >> (offset - containerSize);
+				view[viewIndex] |= dataArray[i] >>> (offset - containerSize);
 				view[viewIndex+1] |= dataArray[i] << (2*containerSize - offset);
 			}
 
@@ -105,7 +105,7 @@ export default class VArrayBuffer {
 		const garbageLength = view[0];
 
 		// Infer dataLength from the byte length of the buffer and the garbage length.
-		const dataLength = ((this.buffer.byteLength - 1) * 8 - garbageLength) / this.bitSize;
+		const dataLength = (this.buffer.byteLength * 8 - containerSize - garbageLength) / this.bitSize;
 
 		// The number is used to generate bit-mask.
 		const magicNumber = Math.pow(2, this.bitSize) - 1;
@@ -125,19 +125,19 @@ export default class VArrayBuffer {
 				// In this case, we simply use the bit-mask to extract data.
 				shift = containerSize - offset;
 				mask = magicNumber << shift;
-				dataArray[i] = (view[viewIndex] & mask) >> shift;
+				dataArray[i] = (view[viewIndex] & mask) >>> shift;
 
 			} else {
 				// 2) Data is recorded over two containers.
 				// In this case, we also use the bit-mask, but repeat the process twice.
 				shift = offset - containerSize;
-				mask = magicNumber >> shift;
+				mask = magicNumber >>> shift;
 				dataArray[i] = (view[viewIndex] & mask) << shift;
 				
 				// Note that we use bit-or operator (|=) on the second process.
 				shift = 2*containerSize - offset
 				mask = magicNumber << shift;
-				dataArray[i] |= (view[viewIndex+1] & mask) >> shift;
+				dataArray[i] |= (view[viewIndex+1] & mask) >>> shift;
 			}
 
 			if (offset >= containerSize) {
