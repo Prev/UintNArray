@@ -1,13 +1,34 @@
-# Converter
+# vArrayBuffer: ArrayBuffer with variable size
+[![npm version](https://badge.fury.io/js/v-array-buffer.svg)](https://www.npmjs.com/package/v-array-buffer)
 
-To convert `ssd_mobilenet_v2_coco` frozen model to tensorflowjs model, use command below:
+Native JavaScript ArrayBuffer DataView only supports 8, 16, or 32 bit size. (1, 2, 4byte respetively).
+VArrayBuffer extends them, by supporting variable size of the bit from 1 to 32.
+Currently it only supports unsigned integer for the data elements,
+and the buffer is not compatible with the native DataView even in the 8, 16, or 32-bit.
+
+Run demo on [RunKit](https://runkit.com/prev/v-array-buffer).
+
+
+## How to install
 
 ```bash
-tensorflowjs_converter --input_format=tf_frozen_model \
-	--output_format=tfjs_graph_model \
-	--output_node_names='Postprocessor/ExpandDims_1,Postprocessor/Slice' \
-	--quantization_bytes=2 \
-	ssd_mobilenet_v2_coco/frozen_inference_graph.pb \
-	coco_q2
+npm i --save v-array-buffer
+```
 
+## How to use
+
+### Convert data list to the buffer
+
+```javascript
+const input = [6, 2, 4, 0, 3, 1, 2, 0, 7];	
+const bufferView = VArrayBuffer.from(3, input);
+console.log(bufferView.buffer);
+```
+
+### Convert buffer to the data list
+
+```javascript
+const bufferView = new VArrayBuffer(3, buffer);
+const decoded = bufferView.decode();
+console.log(decoded); 
 ```

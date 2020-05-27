@@ -97,7 +97,7 @@ export default class VArrayBuffer {
 		this.buffer = buffer;
 	}
 
-	public view(): number[] {
+	public decode(): number[] {
 		const containerSize = VArrayBuffer.getContainerSize(this.bitSize);
 		
 		// Init view to load data from the buffer

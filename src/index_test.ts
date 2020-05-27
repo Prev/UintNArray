@@ -1,6 +1,16 @@
 import VArrayBuffer from './index';
 
 describe('testVArrayBuffer', () => {
+	it('testExample', () => {
+		const input = [6, 2, 4, 0, 3, 1, 2, 0, 7, 7, 2, 4];	
+		const bufferView = VArrayBuffer.from(3, input);
+
+		const bufferViewForDecoding = new VArrayBuffer(3, bufferView.buffer);
+		const decoded = bufferViewForDecoding.decode();
+
+		expect(decoded).toEqual(input);
+	});
+
 	it('test2bit', () => {
 		// 2-bit data has a range[0, 3]
 		const input = [] as number[];
@@ -9,7 +19,7 @@ describe('testVArrayBuffer', () => {
 		}
 		
 		const vab = VArrayBuffer.from(2, input);
-		expect(vab.view()).toEqual(input);
+		expect(vab.decode()).toEqual(input);
 	});
 
 	it('test3bit', () => {
@@ -17,7 +27,7 @@ describe('testVArrayBuffer', () => {
 		const input = [6, 2, 4, 0, 3, 1, 2, 0, 7, 7, 2, 4];
 		
 		const vab = VArrayBuffer.from(3, input);
-		expect(vab.view()).toEqual(input);
+		expect(vab.decode()).toEqual(input);
 	});
 
 	it('test4bit', () => {
@@ -28,7 +38,7 @@ describe('testVArrayBuffer', () => {
 		}
 		
 		const vab = VArrayBuffer.from(4, input);
-		expect(vab.view()).toEqual(input);
+		expect(vab.decode()).toEqual(input);
 	});
 
 	it('test5bit', () => {
@@ -39,7 +49,7 @@ describe('testVArrayBuffer', () => {
 		}
 		
 		const vab = VArrayBuffer.from(5, input);
-		expect(vab.view()).toEqual(input);
+		expect(vab.decode()).toEqual(input);
 	});
 
 	it('test6bit', () => {
@@ -50,7 +60,7 @@ describe('testVArrayBuffer', () => {
 		}
 		
 		const vab = VArrayBuffer.from(6, input);
-		expect(vab.view()).toEqual(input);
+		expect(vab.decode()).toEqual(input);
 	});
 
 	it('test7bit', () => {
@@ -61,7 +71,7 @@ describe('testVArrayBuffer', () => {
 		}
 		
 		const vab = VArrayBuffer.from(7, input);
-		expect(vab.view()).toEqual(input);
+		expect(vab.decode()).toEqual(input);
 	});
 
 	it('test8bit', () => {
@@ -72,7 +82,7 @@ describe('testVArrayBuffer', () => {
 		}
 		
 		const vab = VArrayBuffer.from(8, input);
-		expect(vab.view()).toEqual(input);
+		expect(vab.decode()).toEqual(input);
 	});
 
 	it('test9bit', () => {
@@ -83,7 +93,7 @@ describe('testVArrayBuffer', () => {
 		}
 		
 		const vab = VArrayBuffer.from(9, input);
-		expect(vab.view()).toEqual(input);
+		expect(vab.decode()).toEqual(input);
 	});
 
 	it('test10bit', () => {
@@ -94,6 +104,6 @@ describe('testVArrayBuffer', () => {
 		}
 		
 		const vab = VArrayBuffer.from(10, input);
-		expect(vab.view()).toEqual(input);
+		expect(vab.decode()).toEqual(input);
 	});
 });
