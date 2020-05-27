@@ -1,5 +1,5 @@
 {
-  "name": "v-array-buffer",
+  "name": "uint-n-array",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
