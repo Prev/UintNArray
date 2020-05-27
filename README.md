@@ -1,4 +1,5 @@
 # UintNArray: UintArray with variable size
+[![Build Status](https://travis-ci.org/Prev/UintNArray.svg)](https://travis-ci.org/Prev/UintNArray)
 [![npm version](https://badge.fury.io/js/uint-n-array.svg)](https://www.npmjs.com/package/uint-n-array)
 
 Native JavaScript UintArray only supports 8, 16, or 32 bit sizes (Uint8Array, Uint16Array, and Uint32Array respetively).
