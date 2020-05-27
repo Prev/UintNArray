@@ -2,10 +2,12 @@
 [![Build Status](https://travis-ci.org/Prev/UintNArray.svg)](https://travis-ci.org/Prev/UintNArray)
 [![npm version](https://badge.fury.io/js/uint-n-array.svg)](https://www.npmjs.com/package/uint-n-array)
 
-Native JavaScript UintArray only supports 8, 16, or 32 bit sizes (Uint8Array, Uint16Array, and Uint32Array respetively).
-UintNArray extends them, by supporting variable size of the bit from 1 to 32.
+Native JavaScript UintArray only supports 8, 16, or 32 bit (Uint8Array, Uint16Array, and Uint32Array respectively).
+UintNArray extends them, supporting variable size of the bit from 1 to 32.
 
-Run demo on [RunKit](https://runkit.com/prev/uint-n-array).
+For example, to represent the data which has a range (0, 7), we can use 3-bit for each element. If there are 40 elements, only 120 bits(15 bytes) are required to represent the data with UintNArray(n=3), while Uint8Array requires 8*40 bits(40 bytes).
+
+Try on [RunKit](https://runkit.com/prev/uint-n-array).
 
 ## How to install
 
